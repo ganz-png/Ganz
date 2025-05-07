@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>website ganz</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      background: url('background.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+
+    .toggle-link a {
+      color: #007bff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* VIDEO LANDSCAPE */
+    #video-section {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #rotate-warning {
+      display: none;
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5em;
+      text-align: center;
+      z-index: 10;
+    }
+
+    #video-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 3em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      z-index: 5;
+      text-align: center;
+    }
+
+    @media screen and (orientation: portrait) {
+      #video-container {
+        display: none;
+      }
+      #rotate-warning {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- FORM LOGIN/DAFTAR -->
+  <div class="container" id="form-section">
+    <!-- FORM DAFTAR -->
+    <form id="registerForm">
+      <h2>Daftar</h2>
+      <input type="email" placeholder="Email" required>
+      <input type="text" placeholder="Username" required>
+      <input type="password" id="regPass" placeholder="Password" required>
+      <input type="password" id="regConfirm" placeholder="Konfirmasi Password" required>
+      <button type="submit">Daftar</button>
+      <div class="toggle-link">
+        Sudah punya akun? <a onclick="toggleForms()">Login</a>
+      </div>
+    </form>
+
+    <!-- FORM LOGIN -->
+    <form id="loginForm" class="hidden">
+      <h2>Login</h2>
+      <input type="text" placeholder="Username atau Email" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+      <div class="toggle-link">
+        Belum punya akun? <a onclick="toggleForms()">Daftar</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- SECTION VIDEO -->
+  <div id="video-section">
+    <div id="rotate-warning">
+      Silakan miringkan perangkat Anda ke mode landscape.
+    </div>
+
+    <div id="video-container">
+      <video autoplay muted loop playsinline>
+        <source src="videoedit1.mp4" type="video/mp4" />
+        Browser Anda tidak mendukung pemutaran video.
+      </video>
+      <div class="overlay-text">Selamat Datang</div>
+    </div>
+  </div>
+
+  <script>
+    function toggleForms() {
+      document.getElementById('registerForm').classList.toggle('hidden');
+      document.getElementById('loginForm').classList.toggle('hidden');
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const pass = document.getElementById('regPass').value;
+      const confirm = document.getElementById('regConfirm').value;
+      if (pass !== confirm) {
+        alert("Password dan konfirmasi tidak cocok.");
+        return;
+      }
+      showVideo();
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showVideo();
+    });
+
+    function showVideo() {
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('video-section').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
